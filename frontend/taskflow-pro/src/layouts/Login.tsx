@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { signIn } from "../services/auth.service";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../components/Button";
+import { Input } from "../components/Input";
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -19,26 +21,23 @@ export function Login() {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-10 max-w-md">
-      <input
-        className="border p-2"
+    <div className="bg-white p-8 rounded shadow-md flex flex-col items-center justify-center gap-4 h-full w-3/4 text-black ">
+      <Input
         placeholder="Email"
+        type="email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={setEmail}
       />
-      <input
-        className="border p-2"
+
+      <Input
         placeholder="Senha"
         type="password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={setPassword}
       />
-      <button className="bg-black text-white p-2" onClick={handleLogin}>
-        Entrar
-      </button>
-      <button type="button" onClick={() => navigate("/register")}>
-        Criar conta
-      </button>
+
+      <Button onClick={handleLogin}>Entrar</Button>
+      <Button onClick={() => navigate("/register")}>Criar conta</Button>
     </div>
   );
 }

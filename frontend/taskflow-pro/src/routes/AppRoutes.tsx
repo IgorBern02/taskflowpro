@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Login } from "../pages/Login";
 import { useAuthStore } from "../store/auth.store";
 import type { ReactNode } from "react";
 import { Dashboard } from "../pages/Dashboard";
-import { Register } from "../pages/Register";
+import { Register } from "../layouts/Register";
+import { Home } from "../pages/Home";
 
 function PrivateRoute({ children }: { children: ReactNode }) {
   const user = useAuthStore((state) => state.user);
@@ -19,7 +19,7 @@ export function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/dashboard"
           element={
