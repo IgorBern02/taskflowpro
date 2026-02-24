@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Login } from "../pages/Login";
 import { useAuthStore } from "../store/auth.store";
 import type { ReactNode } from "react";
+import { Dashboard } from "../pages/Dashboard";
 
 function PrivateRoute({ children }: { children: ReactNode }) {
   const user = useAuthStore((state) => state.user);
@@ -11,10 +12,6 @@ function PrivateRoute({ children }: { children: ReactNode }) {
   }
 
   return children;
-}
-
-function Dashboard() {
-  return <div className="p-10">Dashboard 🔥</div>;
 }
 
 export function AppRoutes() {
