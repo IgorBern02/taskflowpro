@@ -3,6 +3,7 @@ import { Login } from "../pages/Login";
 import { useAuthStore } from "../store/auth.store";
 import type { ReactNode } from "react";
 import { Dashboard } from "../pages/Dashboard";
+import { Register } from "../pages/Register";
 
 function PrivateRoute({ children }: { children: ReactNode }) {
   const user = useAuthStore((state) => state.user);
@@ -27,6 +28,7 @@ export function AppRoutes() {
             </PrivateRoute>
           }
         />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );

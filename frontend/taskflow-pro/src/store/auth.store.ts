@@ -1,24 +1,36 @@
 import { create } from "zustand";
-import type { Session, User } from "@supabase/supabase-js";
-import { supabase } from "../services/supabase";
+
+type User = {
+  id: string;
+  email: string;
+};
 
 type AuthState = {
   user: User | null;
-  session: Session | null;
-  setSession: (session: Session | null) => void;
+  token: string | null;
+  setAuth: (user: User, token: string) => void;
+  logout: () => void;
 };
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  session: null,
-  setSession: (session) =>
-    set({
-      session,
-      user: session?.user ?? null,
-    }),
-}));
+  token: null,
 
-// Listener global
-supabase.auth.onAuthStateChange((_event, session) => {
-  useAuthStore.getState().setSession(session);
-});
+  setAuth: (user, token) => {
+    localStorage.setItem("token", token);
+
+    set({
+      user,
+      token,
+    });
+  },
+
+  logout: () => {
+    localStorage.removeItem("token");
+
+    set({
+      user: null,
+      token: null,
+    });
+  },
+}));

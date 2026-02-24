@@ -18,8 +18,7 @@ export function useProjects() {
 
   const createMutation = useMutation({
     mutationFn: (name: string) => {
-      if (!user) throw new Error("Usuário não autenticado");
-      return createProject(name, user.id);
+      return createProject(name);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });

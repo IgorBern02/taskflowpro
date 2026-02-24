@@ -1,35 +1,53 @@
-import { supabase } from "./supabase";
+import { useAuthStore } from "../store/auth.store";
 
-export async function getProjects() {
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*")
-    .order("created_at", { ascending: false });
+const API_URL = "http://localhost:3001";
 
-  if (error) throw error;
+function getHeaders() {
+  const token = useAuthStore.getState().token;
 
-  return data;
+  if (!token) {
+    throw new Error("Usuário não autenticado");
+  }
+
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
 }
 
-export async function createProject(name: string, userId: string) {
-  const { data, error } = await supabase
-    .from("projects")
-    .insert([
-      {
-        name,
-        user_id: userId,
-      },
-    ])
-    .select()
-    .single();
+export async function getProjects() {
+  const response = await fetch(`${API_URL}/projects`, {
+    headers: getHeaders(),
+  });
 
-  if (error) throw error;
+  if (!response.ok) {
+    throw new Error("Erro ao buscar projetos");
+  }
 
-  return data;
+  return response.json();
+}
+
+export async function createProject(name: string) {
+  const response = await fetch(`${API_URL}/projects`, {
+    method: "POST",
+    headers: getHeaders(),
+    body: JSON.stringify({ name }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Erro ao criar projeto");
+  }
+
+  return response.json();
 }
 
 export async function deleteProject(id: string) {
-  const { error } = await supabase.from("projects").delete().eq("id", id);
+  const response = await fetch(`${API_URL}/projects/${id}`, {
+    method: "DELETE",
+    headers: getHeaders(),
+  });
 
-  if (error) throw error;
+  if (!response.ok) {
+    throw new Error("Erro ao deletar projeto");
+  }
 }

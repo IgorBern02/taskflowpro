@@ -11,7 +11,7 @@ export function Login() {
     try {
       const data = await signIn(email, password);
       console.log("Login realizado:", data);
-      alert("Login sucesso ✅");
+
       navigate("/dashboard");
     } catch (error: any) {
       alert(error.message);
@@ -35,6 +35,9 @@ export function Login() {
       />
       <button className="bg-black text-white p-2" onClick={handleLogin}>
         Entrar
+      </button>
+      <button type="button" onClick={() => navigate("/register")}>
+        Criar conta
       </button>
     </div>
   );
