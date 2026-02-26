@@ -3,6 +3,7 @@ import { Dashboard } from "../pages/Dashboard";
 import { Register } from "../layouts/Register";
 import { Home } from "../pages/Home";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { ProjectDetails } from "../pages/ProjectDetails";
 
 export function AppRoutes() {
   return (
@@ -18,6 +19,14 @@ export function AppRoutes() {
           }
         />
         <Route path="/register" element={<Register />} />
+        <Route
+          path="/projects/:id"
+          element={
+            <ProtectedRoute>
+              <ProjectDetails />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

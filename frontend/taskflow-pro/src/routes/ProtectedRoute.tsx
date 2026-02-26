@@ -6,7 +6,11 @@ type Props = {
 };
 
 export function ProtectedRoute({ children }: Props) {
-  const user = useAuthStore((state) => state.user);
+  const { user, isAuthLoading } = useAuthStore();
+
+  if (isAuthLoading) {
+    return <div>Carregando...</div>;
+  }
 
   if (!user) {
     return <Navigate to="/" replace />;

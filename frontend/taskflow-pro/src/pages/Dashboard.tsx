@@ -62,6 +62,7 @@ export function Dashboard() {
           <li
             key={project.id}
             className="border p-3 flex justify-between items-center "
+            onClick={() => navigate(`/projects/${project.name}`)}
           >
             <span>{project.name}</span>
             <button
