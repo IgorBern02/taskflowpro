@@ -3,17 +3,26 @@ import { signIn } from "../services/auth.service";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
+import { useAuthStore } from "../store/auth.store";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const setAuth = useAuthStore((state) => state.setAuth);
 
   async function handleLogin() {
     try {
       const data = await signIn(email, password);
       console.log("Login realizado:", data);
 
+      setAuth(
+        {
+          id: data.user.id,
+          email: data.user.email,
+        },
+        data.token,
+      );
       navigate("/dashboard");
     } catch (error: any) {
       alert(error.message);

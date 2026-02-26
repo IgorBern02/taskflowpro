@@ -12,3 +12,7 @@ export interface CreateProjectDTO {
 export interface UpdateProjectDTO {
   name: string;
 }
+
+export interface DeleteProjectDTO {
+  id: string;
+}

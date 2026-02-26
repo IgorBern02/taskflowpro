@@ -1,19 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useAuthStore } from "../store/auth.store";
-import type { ReactNode } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Dashboard } from "../pages/Dashboard";
 import { Register } from "../layouts/Register";
 import { Home } from "../pages/Home";
-
-function PrivateRoute({ children }: { children: ReactNode }) {
-  const user = useAuthStore((state) => state.user);
-
-  if (!user) {
-    return <Navigate to="/" />;
-  }
-
-  return children;
-}
+import { ProtectedRoute } from "./ProtectedRoute";
 
 export function AppRoutes() {
   return (
@@ -23,9 +12,9 @@ export function AppRoutes() {
         <Route
           path="/dashboard"
           element={
-            <PrivateRoute>
+            <ProtectedRoute>
               <Dashboard />
-            </PrivateRoute>
+            </ProtectedRoute>
           }
         />
         <Route path="/register" element={<Register />} />

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { supabase } from "../services/supabase";
+import { supabaseAuth } from "../services/supabaseAuth";
 
 export async function authMiddleware(
   req: Request,
@@ -18,7 +18,7 @@ export async function authMiddleware(
     return res.status(401).json({ error: "Token não enviado" });
   }
 
-  const { data, error } = await supabase.auth.getUser(token);
+  const { data, error } = await supabaseAuth.auth.getUser(token);
 
   if (error || !data.user) {
     return res.status(401).json({ error: "Token inválido" });

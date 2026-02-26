@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { supabase } from "../services/supabase";
+import { supabaseAuth } from "../services/supabaseAuth";
 
 export async function register(req: Request, res: Response) {
   const { email, password } = req.body;
@@ -8,7 +8,7 @@ export async function register(req: Request, res: Response) {
     return res.status(400).json({ error: "Email e senha obrigatórios" });
   }
 
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error } = await supabaseAuth.auth.signUp({
     email,
     password,
   });
@@ -30,7 +30,7 @@ export async function login(req: Request, res: Response) {
     return res.status(400).json({ error: "Email e senha obrigatórios" });
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabaseAuth.auth.signInWithPassword({
     email,
     password,
   });

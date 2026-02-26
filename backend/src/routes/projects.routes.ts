@@ -12,10 +12,10 @@ const router = Router();
 
 router.use(authMiddleware);
 
-router.get("/", getProjects);
-router.get("/:id", getProjectById);
-router.post("/", createProject);
-router.put("/:id", updateProject);
-router.delete("/:id", deleteProject);
+router.get("/", authMiddleware, getProjects);
+router.get("/:id", authMiddleware, getProjectById);
+router.post("/", authMiddleware, createProject);
+router.put("/:id", authMiddleware, updateProject);
+router.delete("/:id", authMiddleware, deleteProject);
 
 export default router;

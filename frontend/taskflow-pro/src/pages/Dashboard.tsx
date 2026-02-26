@@ -1,10 +1,29 @@
 import { useState } from "react";
 import { useProjects } from "../hooks/useProjects";
+import { Button } from "../components/Button";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/auth.store";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function Dashboard() {
   const { projectsQuery, createProject, deleteProject, isCreating } =
     useProjects();
+
   const [name, setName] = useState("");
+
+  const logout = useAuthStore((state) => state.logout);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const handleSignOut = () => {
+    try {
+      logout();
+      queryClient.clear();
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   if (projectsQuery.isLoading) {
     return <div className="p-10">Carregando...</div>;
@@ -42,11 +61,11 @@ export function Dashboard() {
         {projectsQuery.data?.map((project: any) => (
           <li
             key={project.id}
-            className="border p-3 flex justify-between items-center"
+            className="border p-3 flex justify-between items-center "
           >
             <span>{project.name}</span>
             <button
-              className="text-red-500"
+              className="text-red-500 cursor-pointer"
               onClick={() => deleteProject(project.id)}
             >
               Deletar
@@ -54,6 +73,7 @@ export function Dashboard() {
           </li>
         ))}
       </ul>
+      <Button onClick={handleSignOut}>Sair</Button>
     </div>
   );
 }

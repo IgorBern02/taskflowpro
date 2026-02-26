@@ -35,7 +35,8 @@ export async function createProject(name: string) {
   });
 
   if (!response.ok) {
-    throw new Error("Erro ao criar projeto");
+    const error = await response.json();
+    throw new Error(error.message || "Erro ao criar projeto");
   }
 
   return response.json();

@@ -11,7 +11,7 @@ export function useProjects() {
   const user = useAuthStore((state) => state.user);
 
   const projectsQuery = useQuery({
-    queryKey: ["projects"],
+    queryKey: ["projects", user?.id],
     queryFn: getProjects,
     enabled: !!user,
   });
@@ -21,14 +21,14 @@ export function useProjects() {
       return createProject(name);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["projects"], exact: false });
     },
   });
 
   const deleteMutation = useMutation({
     mutationFn: deleteProject,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["projects"], exact: false });
     },
   });
 

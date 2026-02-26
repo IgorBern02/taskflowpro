@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { supabase } from "../services/supabase";
+import { supabaseAdmin } from "../services/supabaseAdmin";
 import { authMiddleware } from "../middleware/auth.middleware";
 
 const router = Router();
 
 // LISTAR
 router.get("/", authMiddleware, async (req: any, res) => {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("tasks")
     .select("*")
     .eq("user_id", req.user.id);
@@ -20,7 +20,7 @@ router.get("/", authMiddleware, async (req: any, res) => {
 router.post("/", authMiddleware, async (req: any, res) => {
   const { title } = req.body;
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("tasks")
     .insert({
       title,
@@ -37,7 +37,7 @@ router.post("/", authMiddleware, async (req: any, res) => {
 router.delete("/:id", authMiddleware, async (req: any, res) => {
   const { id } = req.params;
 
-  const { error } = await supabase
+  const { error } = await supabaseAdmin
     .from("tasks")
     .delete()
     .eq("id", id)

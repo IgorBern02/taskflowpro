@@ -9,8 +9,18 @@ function App() {
     const token = localStorage.getItem("token");
 
     if (token) {
-      // opcional: futuramente validar token no backend
-      setAuth({ id: "temp", email: "temp" }, token);
+      // 🔥 opcionalmente você pode validar token no backend
+      // mas por enquanto apenas restaura estado
+
+      const payload = JSON.parse(atob(token.split(".")[1]));
+
+      setAuth(
+        {
+          id: payload.sub,
+          email: payload.email,
+        },
+        token,
+      );
     }
   }, []);
 
