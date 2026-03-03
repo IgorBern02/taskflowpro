@@ -7,8 +7,8 @@ const router = Router();
 router.use(authMiddleware);
 
 // LISTAR
-router.get("/projects/:id/tasks", async (req, res) => {
-  const { id } = req.params;
+router.get("/:projectId/tasks", async (req, res) => {
+  const { projectId: id } = req.params;
   const userId = req.user.id;
 
   // Primeiro verifica se o projeto pertence ao usuário
@@ -35,13 +35,13 @@ router.get("/projects/:id/tasks", async (req, res) => {
 });
 
 // CRIAR
-router.post("/projects/:id/tasks", async (req, res) => {
-  const { id } = req.params;
+router.post("/:projectId/tasks", async (req, res) => {
+  const { projectId: id } = req.params;
   const { title, description } = req.body;
   const userId = req.user.id;
 
   // validar projeto pertence ao user
-  const { data: project } = await supabase
+  const { data: project } = await supabaseAdmin
     .from("projects")
     .select("id")
     .eq("id", id)
@@ -68,15 +68,15 @@ router.post("/projects/:id/tasks", async (req, res) => {
 });
 
 // ATUALIZAR
-router.patch("/tasks/:id", async (req, res) => {
-  const { id } = req.params;
+router.patch("/:projectId/tasks/:taskId", async (req, res) => {
+  const { projectId: id, taskId: taskId } = req.params;
   const { status } = req.body;
   const userId = req.user.id;
 
   const { data: task } = await supabaseAdmin
     .from("tasks")
     .select("project_id")
-    .eq("id", id)
+    .eq("id", taskId)
     .single();
 
   if (!task) {
@@ -107,8 +107,8 @@ router.patch("/tasks/:id", async (req, res) => {
 });
 
 // DELETAR
-router.delete("/tasks/:id", async (req: any, res) => {
-  const { id } = req.params;
+router.delete("/:projectId/tasks/:taskId", async (req: any, res) => {
+  const { taskId: id } = req.params;
   const userId = req.user.id;
 
   const { data: task } = await supabaseAdmin

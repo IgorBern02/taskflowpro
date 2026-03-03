@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/projects", projectsRoutes);
-app.use("/tasks", tasksRoutes);
+app.use("/projects", tasksRoutes);
 app.use("/auth", authRoutes);
 
 app.listen(3001, () => {

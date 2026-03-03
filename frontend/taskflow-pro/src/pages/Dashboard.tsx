@@ -61,13 +61,21 @@ export function Dashboard() {
         {projectsQuery.data?.map((project: any) => (
           <li
             key={project.id}
-            className="border p-3 flex justify-between items-center "
-            onClick={() => navigate(`/projects/${project.name}`)}
+            className="border p-3 flex justify-between items-center"
           >
-            <span>{project.name}</span>
+            <span
+              className="cursor-pointer"
+              onClick={() => navigate(`/projects/${project.id}`)}
+            >
+              {project.name}
+            </span>
+
             <button
-              className="text-red-500 cursor-pointer"
-              onClick={() => deleteProject(project.id)}
+              className="text-red-500"
+              onClick={(e) => {
+                e.stopPropagation();
+                deleteProject(project.id);
+              }}
             >
               Deletar
             </button>

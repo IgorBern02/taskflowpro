@@ -6,6 +6,12 @@ import {
 } from "../services/projects.service";
 import { useAuthStore } from "../store/auth.store";
 
+export interface Project {
+  id: number;
+  name: string;
+  userId: number;
+}
+
 export function useProjects() {
   const queryClient = useQueryClient();
   const user = useAuthStore((state) => state.user);
