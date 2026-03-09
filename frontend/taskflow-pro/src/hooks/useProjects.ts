@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getProjects,
   createProject,
+  updateProject,
   deleteProject,
 } from "../services/projects.service";
 import { useAuthStore } from "../store/auth.store";
@@ -31,6 +32,14 @@ export function useProjects() {
     },
   });
 
+  const updateMutation = useMutation({
+    mutationFn: ({ id, name }: { id: string; name: string }) =>
+      updateProject(id, name),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"], exact: false });
+    },
+  });
+
   const deleteMutation = useMutation({
     mutationFn: deleteProject,
     onSuccess: () => {
@@ -41,6 +50,7 @@ export function useProjects() {
   return {
     projectsQuery,
     createProject: createMutation.mutate,
+    updateProject: updateMutation.mutate,
     deleteProject: deleteMutation.mutate,
     isCreating: createMutation.isPending,
   };

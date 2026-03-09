@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { EditTaskModal } from "./EditTaskModal";
+
 type ColumnProps = {
   title: string;
   tasks: any[];
@@ -5,6 +8,7 @@ type ColumnProps = {
   onMoveForward?: (id: string) => void;
   onMoveBackward?: (id: string) => void;
   onComplete?: (id: string) => void;
+  onEdit?: (id: string, title: string) => void;
 };
 
 export function Column({
@@ -14,7 +18,10 @@ export function Column({
   onMoveForward,
   onMoveBackward,
   onComplete,
+  onEdit,
 }: ColumnProps) {
+  const [editingTask, setEditingTask] = useState<any | null>(null);
+
   return (
     <div className="bg-gray-100 p-4 rounded">
       <h2 className="font-semibold mb-4">{title}</h2>
@@ -35,6 +42,13 @@ ${task.status === "done" ? "opacity-60" : "hover:shadow-md"}`}
             </span>
 
             <div className="flex gap-2 items-center">
+              <button
+                className="text-yellow-600 hover:text-yellow-800"
+                onClick={() => setEditingTask(task)}
+              >
+                ✎
+              </button>
+
               {onMoveBackward && (
                 <button
                   className="text-gray-500 hover:text-black"
@@ -71,6 +85,16 @@ ${task.status === "done" ? "opacity-60" : "hover:shadow-md"}`}
             </div>
           </div>
         ))}
+        {editingTask && (
+          <EditTaskModal
+            task={editingTask}
+            onClose={() => setEditingTask(null)}
+            onSave={(id, title) => {
+              onEdit?.(id, title);
+              setEditingTask(null);
+            }}
+          />
+        )}
       </div>
     </div>
   );

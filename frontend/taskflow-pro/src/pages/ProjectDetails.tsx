@@ -68,6 +68,7 @@ export function ProjectDetails() {
           title="TODO"
           tasks={todo}
           onDelete={deleteTask}
+          onEdit={(id, title) => updateTask({ id, updates: { title } })}
           onMoveForward={(id) =>
             updateTask({ id, updates: { status: "doing" } })
           }
@@ -77,6 +78,7 @@ export function ProjectDetails() {
           title="DOING"
           tasks={doing}
           onDelete={deleteTask}
+          onEdit={(id, title) => updateTask({ id, updates: { title } })}
           onMoveBackward={(id) =>
             updateTask({ id, updates: { status: "todo" } })
           }
@@ -89,6 +91,7 @@ export function ProjectDetails() {
           title="DONE"
           tasks={done}
           onDelete={deleteTask}
+          onEdit={(id, title) => updateTask({ id, updates: { title } })}
           onMoveBackward={(id) =>
             updateTask({ id, updates: { status: "doing" } })
           }

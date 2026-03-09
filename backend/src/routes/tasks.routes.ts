@@ -70,7 +70,7 @@ router.post("/:projectId/tasks", async (req, res) => {
 // ATUALIZAR
 router.patch("/:projectId/tasks/:taskId", async (req, res) => {
   const { projectId: id, taskId: taskId } = req.params;
-  const { status } = req.body;
+  const { status, title } = req.body;
   const userId = req.user.id;
 
   const { data: task } = await supabaseAdmin
@@ -96,7 +96,7 @@ router.patch("/:projectId/tasks/:taskId", async (req, res) => {
 
   const { data, error } = await supabaseAdmin
     .from("tasks")
-    .update({ status })
+    .update({ status, title })
     .eq("id", taskId)
     .select()
     .single();
