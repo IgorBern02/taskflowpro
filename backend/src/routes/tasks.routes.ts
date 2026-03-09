@@ -97,7 +97,7 @@ router.patch("/:projectId/tasks/:taskId", async (req, res) => {
   const { data, error } = await supabaseAdmin
     .from("tasks")
     .update({ status })
-    .eq("id", id)
+    .eq("id", taskId)
     .select()
     .single();
 

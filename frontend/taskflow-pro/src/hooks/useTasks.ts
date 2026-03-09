@@ -31,7 +31,7 @@ export function useTasks(projectId: string) {
 
   const updateMutation = useMutation({
     mutationFn: ({ id, updates }: { id: string; updates: Partial<Task> }) =>
-      updateTask(id, updates),
+      updateTask(projectId, id, updates),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["tasks", projectId],
@@ -40,7 +40,7 @@ export function useTasks(projectId: string) {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => deleteTask(id),
+    mutationFn: (id: string) => deleteTask(projectId, id),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["tasks", projectId],

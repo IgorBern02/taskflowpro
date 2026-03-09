@@ -1,7 +1,5 @@
 import type { Task } from "../types/Task";
 
-const API_URL = "http://localhost:3001/tasks";
-
 function getAuthHeaders() {
   const token = localStorage.getItem("token");
 
@@ -44,14 +42,18 @@ export async function createTask(projectId: string, data: any) {
 }
 
 export async function updateTask(
-  id: string,
+  project_id: string,
+  taskId: string,
   updatedTask: Partial<Task>,
 ): Promise<Task> {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "PATCH",
-    headers: getAuthHeaders(),
-    body: JSON.stringify(updatedTask),
-  });
+  const response = await fetch(
+    `http://localhost:3001/projects/${project_id}/tasks/${taskId}`,
+    {
+      method: "PATCH",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(updatedTask),
+    },
+  );
 
   if (!response.ok) {
     throw new Error("Erro ao atualizar tarefa");
@@ -60,11 +62,17 @@ export async function updateTask(
   return response.json();
 }
 
-export async function deleteTask(id: string): Promise<void> {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "DELETE",
-    headers: getAuthHeaders(),
-  });
+export async function deleteTask(
+  project_id: string,
+  taskId: string,
+): Promise<void> {
+  const response = await fetch(
+    `http://localhost:3001/projects/${project_id}/tasks/${taskId}`,
+    {
+      method: "DELETE",
+      headers: getAuthHeaders(),
+    },
+  );
 
   if (!response.ok) {
     throw new Error("Erro ao deletar tarefa");

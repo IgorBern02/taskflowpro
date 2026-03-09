@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useTasks } from "../hooks/useTasks";
 import { useState } from "react";
 import { Column } from "../components/Column";
+import { useProjects, type Project } from "../hooks/useProjects";
 
 export function ProjectDetails() {
   const { id } = useParams();
@@ -9,10 +10,14 @@ export function ProjectDetails() {
     return <div>Projeto inválido</div>;
   }
 
-  const projectId = id;
+  const projectId = id!;
 
   const { tasksQuery, createTask, updateTask, deleteTask } =
     useTasks(projectId);
+
+  const { projectsQuery } = useProjects();
+
+  const project = projectsQuery.data?.find((p: Project) => p.id === projectId);
 
   const [title, setTitle] = useState("");
 
@@ -35,7 +40,9 @@ export function ProjectDetails() {
 
   return (
     <div className="p-10">
-      <h1 className="text-2xl font-bold mb-6">Projeto {id}</h1>
+      <h1 className="text-2xl font-bold mb-6">
+        Projeto {project?.name ?? "Carregando..."}
+      </h1>
 
       <div className="flex gap-2 mb-6">
         <input
@@ -61,17 +68,31 @@ export function ProjectDetails() {
           title="TODO"
           tasks={todo}
           onDelete={deleteTask}
-          onMove={(id) => updateTask({ id, updates: { status: "doing" } })}
+          onMoveForward={(id) =>
+            updateTask({ id, updates: { status: "doing" } })
+          }
         />
 
         <Column
           title="DOING"
           tasks={doing}
           onDelete={deleteTask}
-          onMove={(id) => updateTask({ id, updates: { status: "done" } })}
+          onMoveBackward={(id) =>
+            updateTask({ id, updates: { status: "todo" } })
+          }
+          onMoveForward={(id) =>
+            updateTask({ id, updates: { status: "done" } })
+          }
         />
 
-        <Column title="DONE" tasks={done} onDelete={deleteTask} />
+        <Column
+          title="DONE"
+          tasks={done}
+          onDelete={deleteTask}
+          onMoveBackward={(id) =>
+            updateTask({ id, updates: { status: "doing" } })
+          }
+        />
       </div>
     </div>
   );

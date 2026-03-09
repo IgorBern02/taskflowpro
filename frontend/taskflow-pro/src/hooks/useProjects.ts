@@ -7,7 +7,7 @@ import {
 import { useAuthStore } from "../store/auth.store";
 
 export interface Project {
-  id: number;
+  id: string;
   name: string;
   userId: number;
 }

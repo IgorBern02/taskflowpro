@@ -2,10 +2,19 @@ type ColumnProps = {
   title: string;
   tasks: any[];
   onDelete: (id: string) => void;
-  onMove?: (id: string) => void;
+  onMoveForward?: (id: string) => void;
+  onMoveBackward?: (id: string) => void;
+  onComplete?: (id: string) => void;
 };
 
-export function Column({ title, tasks, onDelete, onMove }: ColumnProps) {
+export function Column({
+  title,
+  tasks,
+  onDelete,
+  onMoveForward,
+  onMoveBackward,
+  onComplete,
+}: ColumnProps) {
   return (
     <div className="bg-gray-100 p-4 rounded">
       <h2 className="font-semibold mb-4">{title}</h2>
@@ -14,25 +23,50 @@ export function Column({ title, tasks, onDelete, onMove }: ColumnProps) {
         {tasks.map((task) => (
           <div
             key={task.id}
-            className="bg-white p-3 rounded shadow flex justify-between items-center"
+            className={`bg-white p-3 rounded shadow flex justify-between items-center transition
+${task.status === "done" ? "opacity-60" : "hover:shadow-md"}`}
           >
-            <span>{task.title}</span>
+            <span
+              className={
+                task.status === "done" ? "line-through opacity-60" : ""
+              }
+            >
+              {task.title}
+            </span>
 
-            <div className="flex gap-2">
-              {onMove && (
+            <div className="flex gap-2 items-center">
+              {onMoveBackward && (
                 <button
-                  className="text-blue-500"
-                  onClick={() => onMove(task.id)}
+                  className="text-gray-500 hover:text-black"
+                  onClick={() => onMoveBackward(task.id)}
+                >
+                  ←
+                </button>
+              )}
+
+              {onMoveForward && (
+                <button
+                  className="text-blue-500 hover:text-blue-700"
+                  onClick={() => onMoveForward(task.id)}
                 >
                   →
                 </button>
               )}
 
+              {onComplete && task.status !== "done" && (
+                <button
+                  className="text-green-600 hover:text-green-800"
+                  onClick={() => onComplete(task.id)}
+                >
+                  ✓
+                </button>
+              )}
+
               <button
-                className="text-red-500"
+                className="text-red-500 hover:text-red-700"
                 onClick={() => onDelete(task.id)}
               >
-                X
+                ✕
               </button>
             </div>
           </div>
