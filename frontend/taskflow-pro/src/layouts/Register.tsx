@@ -3,18 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { signUp } from "../services/auth.service";
 import { useAuthStore } from "../store/auth.store";
 import { Input } from "../components/Input";
-
 import { Button } from "../components/Button";
+import { motion } from "framer-motion";
 
-export function Register() {
+export const Register = () => {
   const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
@@ -30,9 +30,7 @@ export function Register() {
     try {
       const { user, token } = await signUp(email, password);
 
-      if (!token) {
-        throw new Error("Token não retornado");
-      }
+      if (!token) throw new Error("Token não retornado");
 
       setAuth(
         {
@@ -51,45 +49,129 @@ export function Register() {
   }
 
   return (
-    <section className=" flex items-center justify-center h-screen w-screen">
-      <div className=" p-10 rounded  w-full h-full flex items-center justify-center gap-4">
-        <p className="uppercase font-bold text-8xl">taskflow pro</p>
-      </div>
-      <div className=" p-10 rounded  w-full h-full flex items-center justify-center gap-4">
-        <form
-          onSubmit={handleRegister}
-          className="bg-white p-8 rounded shadow-md flex flex-col items-center justify-center gap-4 h-full w-3/4 text-black "
+    <section className="min-h-screen w-full bg-linear-to-br from-slate-50 to-slate-200 flex items-center justify-center p-6">
+      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        {/* Left Hero */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+          className="space-y-8"
         >
-          <Input
-            placeholder="Email"
-            value={email}
-            onChange={setEmail}
-            required
-          />
+          <div className="space-y-4">
+            <h1 className="text-5xl lg:text-7xl font-black tracking-tight text-slate-800">
+              Comece no <span className="text-blue-600">TaskFlow Pro</span>
+            </h1>
 
-          <Input
-            placeholder="Senha"
-            type="password"
-            value={password}
-            onChange={setPassword}
-            required
-          />
+            <p className="text-lg text-slate-600 max-w-xl leading-relaxed">
+              Crie sua conta gratuitamente e organize suas tarefas com um fluxo
+              simples e eficiente.
+            </p>
+          </div>
 
-          <Input
-            placeholder="Confirmar senha"
-            type="password"
-            value={confirmPassword}
-            onChange={setConfirmPassword}
-            required
-          />
+          <div className="flex items-center gap-4">
+            <Feature>Quadros Kanban</Feature>
+            <Feature>Controle de Progresso</Feature>
+            <Feature>Produtividade Diária</Feature>
+          </div>
+        </motion.div>
 
-          <Button type="submit" disabled={loading}>
-            {loading ? "Registrando..." : "Criar conta"}
-          </Button>
+        {/* Right Form */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+          className="flex justify-center"
+        >
+          <form
+            onSubmit={handleRegister}
+            className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-slate-200 p-8 space-y-6"
+          >
+            <div className="space-y-2 text-center">
+              <h2 className="text-2xl font-bold text-slate-800">Criar conta</h2>
+              <p className="text-sm text-slate-500">Leva menos de um minuto</p>
+            </div>
 
-          {error && <p className="text-red-500">{error}</p>}
-        </form>
+            <div className="space-y-4">
+              <Field label="Email">
+                <Input
+                  placeholder="voce@email.com"
+                  value={email}
+                  onChange={setEmail}
+                  required
+                />
+              </Field>
+
+              <Field label="Senha">
+                <Input
+                  placeholder="••••••••"
+                  type="password"
+                  value={password}
+                  onChange={setPassword}
+                  required
+                />
+              </Field>
+
+              <Field label="Confirmar senha">
+                <Input
+                  placeholder="••••••••"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={setConfirmPassword}
+                  required
+                />
+              </Field>
+            </div>
+
+            {error && (
+              <div className="text-sm text-red-600 bg-red-50 border border-red-200 px-3 py-2 rounded-lg">
+                {error}
+              </div>
+            )}
+
+            <div className="space-y-3">
+              <Button type="submit" disabled={loading}>
+                {loading ? "Criando conta..." : "Criar conta"}
+              </Button>
+
+              <button
+                type="button"
+                onClick={() => navigate("/")}
+                className="w-full text-sm font-medium text-slate-600 hover:text-slate-900 transition"
+              >
+                Já tenho conta
+              </button>
+            </div>
+          </form>
+        </motion.div>
       </div>
     </section>
+  );
+};
+
+/* ---------- Subcomponents ---------- */
+
+function Field({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-2">
+      <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
+        {label}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+function Feature({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="px-4 py-2 rounded-xl bg-white shadow-sm border border-slate-200">
+      <p className="text-sm font-medium text-slate-700">{children}</p>
+    </div>
   );
 }

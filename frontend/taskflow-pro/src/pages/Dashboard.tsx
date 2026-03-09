@@ -8,8 +8,9 @@ import { useProjects } from "../hooks/useProjects";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/auth.store";
 import { useQueryClient } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 
-export function Dashboard() {
+export const Dashboard = () => {
   const {
     projectsQuery,
     createProject,
@@ -31,23 +32,70 @@ export function Dashboard() {
     navigate("/");
   };
 
-  if (projectsQuery.isLoading) return <div className="p-10">Carregando...</div>;
-  if (projectsQuery.error) return <div className="p-10 text-red-500">Erro</div>;
+  if (projectsQuery.isLoading)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <p className="text-slate-500">Carregando projetos...</p>
+      </div>
+    );
+
+  if (projectsQuery.error)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <p className="text-red-500 font-medium">Erro ao carregar projetos</p>
+      </div>
+    );
 
   return (
-    <div className="p-10 max-w-2xl">
-      <h1 className="text-2xl font-bold mb-6">Seus Projetos</h1>
+    <section className="min-h-screen w-full bg-linear-to-br from-slate-50 to-slate-200 p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35 }}
+        className="max-w-4xl mx-auto"
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-800">Seus Projetos</h1>
+            <p className="text-slate-500 text-sm">
+              Gerencie e organize seu fluxo de trabalho
+            </p>
+          </div>
 
-      <CreateProjectForm onCreate={createProject} isCreating={isCreating} />
+          <Button onClick={handleSignOut}>Sair</Button>
+        </div>
 
-      <ProjectList
-        projects={projectsQuery.data ?? []}
-        onOpen={(id) => navigate(`/projects/${id}`)}
-        onEdit={(project) => setProjectToEdit(project)}
-        onDelete={(project) => setProjectToDelete(project)}
-      />
+        {/* Main Card */}
+        <div className="bg-white rounded-3xl shadow-xl border border-slate-200 p-8 space-y-8">
+          {/* Create */}
+          <div>
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">
+              Criar novo projeto
+            </h2>
+            <CreateProjectForm
+              onCreate={createProject}
+              isCreating={isCreating}
+            />
+          </div>
 
-      <Button onClick={handleSignOut}>Sair</Button>
+          {/* Divider */}
+          <div className="border-t border-slate-100" />
+
+          {/* List */}
+          <div>
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">
+              Seus quadros
+            </h2>
+            <ProjectList
+              projects={projectsQuery.data ?? []}
+              onOpen={(id) => navigate(`/projects/${id}`)}
+              onEdit={(project) => setProjectToEdit(project)}
+              onDelete={(project) => setProjectToDelete(project)}
+            />
+          </div>
+        </div>
+      </motion.div>
 
       {projectToDelete && (
         <DeleteProjectModal
@@ -70,6 +118,6 @@ export function Dashboard() {
           }}
         />
       )}
-    </div>
+    </section>
   );
-}
+};

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { EditTaskModal } from "./EditTaskModal";
-import { FaArrowLeft, FaArrowRight, FaCheck, FaPen } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight, FaPen } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import { motion } from "framer-motion";
+
+import { DeleteTaskModal } from "./DeleteTaskModal";
 
 // Tipagem melhor (evita any)
 type Task = {
@@ -25,10 +27,10 @@ export const TaskCard = ({
   onDelete,
   onMoveForward,
   onMoveBackward,
-  onComplete,
   onEdit,
 }: TaskCardProps) => {
   const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [deleteTaskId, setDeleteTaskId] = useState<string | null>(null);
 
   return (
     <>
@@ -59,7 +61,7 @@ export const TaskCard = ({
                   <FaPen />
                 </IconButton>
 
-                <IconButton onClick={() => onDelete(task.id)} danger>
+                <IconButton onClick={() => setDeleteTaskId(task.id)} danger>
                   <MdDelete />
                 </IconButton>
               </div>
@@ -81,17 +83,6 @@ export const TaskCard = ({
                     <FaArrowRight className="text-xs" />
                   </IconButton>
                 )}
-
-                {onComplete && task.status !== "done" && (
-                  <button
-                    onClick={() => onComplete(task.id)}
-                    className="flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-lg
-                    bg-green-100 text-green-700 hover:bg-green-200 transition"
-                  >
-                    <FaCheck className="text-xs" />
-                    Concluir
-                  </button>
-                )}
               </div>
             </div>
           </motion.div>
@@ -105,6 +96,17 @@ export const TaskCard = ({
           onSave={(id, title) => {
             onEdit?.(id, title);
             setEditingTask(null);
+          }}
+        />
+      )}
+
+      {deleteTaskId && (
+        <DeleteTaskModal
+          taskId={deleteTaskId}
+          onClose={() => setDeleteTaskId(null)}
+          onDelete={(id) => {
+            onDelete(id);
+            setDeleteTaskId(null);
           }}
         />
       )}

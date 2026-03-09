@@ -17,13 +17,13 @@ export function CreateProjectForm({ onCreate, isCreating }: Props) {
   return (
     <div className="flex gap-2 mb-6">
       <input
-        className="border p-2 flex-1"
+        className="border border-black text-black p-2 flex-1"
         placeholder="Nome do projeto"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <button
-        className="bg-black text-white px-4"
+        className="bg-black text-white px-4 cursor-pointer"
         disabled={isCreating}
         onClick={handleCreate}
       >

@@ -16,8 +16,8 @@ export const CreateTaskForm = ({ text }: CreateTaskFormProps) => {
   return (
     <div className="flex gap-2 mb-6">
       <input
-        className="border p-2 flex-1"
-        placeholder="Nova tarefa"
+        className="border border-black p-2 flex-1"
+        placeholder="Digite sua nova tarefa"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
