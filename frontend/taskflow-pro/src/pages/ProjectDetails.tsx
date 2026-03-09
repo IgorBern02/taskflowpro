@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useTasks } from "../hooks/useTasks";
-import { useState } from "react";
-import { Column } from "../components/Column";
+import { Column } from "../components/project-details/Column";
 import { useProjects, type Project } from "../hooks/useProjects";
+import { CreateTaskForm } from "../components/project-details/CreateTaskForm";
 
 export function ProjectDetails() {
   const { id } = useParams();
@@ -11,15 +11,9 @@ export function ProjectDetails() {
   }
 
   const projectId = id!;
-
-  const { tasksQuery, createTask, updateTask, deleteTask } =
-    useTasks(projectId);
-
+  const { tasksQuery, updateTask, deleteTask } = useTasks(projectId);
   const { projectsQuery } = useProjects();
-
   const project = projectsQuery.data?.find((p: Project) => p.id === projectId);
-
-  const [title, setTitle] = useState("");
 
   if (tasksQuery.isLoading) {
     return <div className="p-10">Carregando tasks...</div>;
@@ -35,33 +29,13 @@ export function ProjectDetails() {
   const doing = tasks.filter((t) => t.status === "doing");
   const done = tasks.filter((t) => t.status === "done");
 
-  console.log("PARAM ID:", id);
-  ~console.log("PROJECT ID:", projectId);
-
   return (
     <div className="p-10">
       <h1 className="text-2xl font-bold mb-6">
         Projeto {project?.name ?? "Carregando..."}
       </h1>
 
-      <div className="flex gap-2 mb-6">
-        <input
-          className="border p-2 flex-1"
-          placeholder="Nova tarefa"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <button
-          className="bg-black text-white px-4"
-          onClick={() => {
-            if (!title.trim()) return;
-            createTask(title);
-            setTitle("");
-          }}
-        >
-          Criar
-        </button>
-      </div>
+      <CreateTaskForm text="criar" />
 
       <div className="grid grid-cols-3 gap-6 text-black">
         <Column
