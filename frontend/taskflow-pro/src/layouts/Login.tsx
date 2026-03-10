@@ -76,12 +76,12 @@ export const Login = () => {
             {loading ? "Entrando..." : "Entrar"}
           </Button>
 
-          <button
-            onClick={() => navigate("/register")}
+          <Button
             className="w-full text-sm font-medium text-slate-600 hover:text-slate-900 transition"
+            onClick={() => navigate("/register")}
           >
             Criar nova conta
-          </button>
+          </Button>
         </div>
 
         {/* Footer */}

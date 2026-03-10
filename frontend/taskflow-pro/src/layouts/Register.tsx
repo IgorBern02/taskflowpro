@@ -136,13 +136,12 @@ export const Register = () => {
                 {loading ? "Criando conta..." : "Criar conta"}
               </Button>
 
-              <button
-                type="button"
-                onClick={() => navigate("/")}
+              <Button
                 className="w-full text-sm font-medium text-slate-600 hover:text-slate-900 transition"
+                onClick={() => navigate("/")}
               >
                 Já tenho conta
-              </button>
+              </Button>
             </div>
           </form>
         </motion.div>
@@ -150,5 +149,3 @@ export const Register = () => {
     </section>
   );
 };
-
-/* ---------- Subcomponents ---------- */
