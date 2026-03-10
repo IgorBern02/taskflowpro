@@ -1,4 +1,4 @@
-import { TaskCard } from "./TaskCard";
+import { TaskCard } from "./card/TaskCard";
 
 type ColumnProps = {
   title: string;

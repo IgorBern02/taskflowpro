@@ -5,6 +5,8 @@ import { useAuthStore } from "../store/auth.store";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { motion } from "framer-motion";
+import { Field } from "../components/register/Field";
+import { Feature } from "../components/register/Feature";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -150,28 +152,3 @@ export const Register = () => {
 };
 
 /* ---------- Subcomponents ---------- */
-
-function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="space-y-2">
-      <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
-        {label}
-      </label>
-      {children}
-    </div>
-  );
-}
-
-function Feature({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="px-4 py-2 rounded-xl bg-white shadow-sm border border-slate-200">
-      <p className="text-sm font-medium text-slate-700">{children}</p>
-    </div>
-  );
-}

@@ -1,5 +1,3 @@
-// services/supabaseAuth.ts
-
 import dotenv from "dotenv";
 
 dotenv.config();

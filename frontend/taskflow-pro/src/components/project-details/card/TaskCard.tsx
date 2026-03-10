@@ -5,22 +5,11 @@ import { MdDelete } from "react-icons/md";
 import { motion } from "framer-motion";
 
 import { DeleteTaskModal } from "./DeleteTaskModal";
+import { IconButton } from "./IconButton";
+import { StatusBadge } from "./StatusBagde";
 
 // Tipagem melhor (evita any)
-type Task = {
-  id: string;
-  title: string;
-  status: "todo" | "doing" | "done";
-};
-
-type TaskCardProps = {
-  tasks: Task[];
-  onDelete: (id: string) => void;
-  onMoveForward?: (id: string) => void;
-  onMoveBackward?: (id: string) => void;
-  onComplete?: (id: string) => void;
-  onEdit?: (id: string, title: string) => void;
-};
+import type { Task, TaskCardProps } from "../../../types/Task";
 
 export const TaskCard = ({
   tasks,
@@ -113,51 +102,3 @@ export const TaskCard = ({
     </>
   );
 };
-
-/* ---------- Subcomponents ---------- */
-
-function IconButton({
-  children,
-  onClick,
-  danger,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  danger?: boolean;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`p-2 rounded-lg transition
-        ${
-          danger
-            ? "bg-red-50 text-red-500 hover:bg-red-100"
-            : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-        }`}
-    >
-      {children}
-    </button>
-  );
-}
-
-function StatusBadge({ status }: { status: Task["status"] }) {
-  const map = {
-    todo: "bg-slate-200 text-slate-700",
-    doing: "bg-blue-100 text-blue-700",
-    done: "bg-green-100 text-green-700",
-  };
-
-  const label = {
-    todo: "A Fazer",
-    doing: "Em Progresso",
-    done: "Concluída",
-  };
-
-  return (
-    <span
-      className={`text-xs font-medium px-2.5 py-1 rounded-full ${map[status]}`}
-    >
-      {label[status]}
-    </span>
-  );
-}
