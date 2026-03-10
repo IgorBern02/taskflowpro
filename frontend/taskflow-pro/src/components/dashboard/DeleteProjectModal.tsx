@@ -1,3 +1,5 @@
+import { Button } from "../Button";
+
 type Props = {
   project: any;
   onClose: () => void;
@@ -14,16 +16,16 @@ export function DeleteProjectModal({ project, onClose, onConfirm }: Props) {
         </p>
 
         <div className="flex justify-end gap-3">
-          <button className="px-4 py-2 border" onClick={onClose}>
+          <Button className="px-4 py-2 border rounded" onClick={onClose}>
             Cancelar
-          </button>
+          </Button>
 
-          <button
-            className="px-4 py-2 bg-red-600 text-white"
+          <Button
+            className="px-4 py-2 bg-red-600 text-white rounded"
             onClick={onConfirm}
           >
             Excluir
-          </button>
+          </Button>
         </div>
       </div>
     </div>

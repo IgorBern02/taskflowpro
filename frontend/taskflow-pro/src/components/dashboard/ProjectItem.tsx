@@ -1,3 +1,5 @@
+import { Button } from "../Button";
+
 type Props = {
   project: any;
   onOpen: (id: string) => void;
@@ -8,13 +10,13 @@ type Props = {
 export function ProjectItem({ project, onOpen, onEdit, onDelete }: Props) {
   return (
     <li
-      className="border border-black text-black p-3 flex justify-between items-center"
+      className="border border-black rounded text-black p-3 flex justify-between items-center"
       onClick={() => onOpen(project.id)}
     >
       <span className="cursor-pointer">{project.name}</span>
 
       <div className="flex gap-3">
-        <button
+        <Button
           className="text-blue-500 cursor-pointer"
           onClick={(e) => {
             e.stopPropagation();
@@ -22,9 +24,9 @@ export function ProjectItem({ project, onOpen, onEdit, onDelete }: Props) {
           }}
         >
           Editar
-        </button>
+        </Button>
 
-        <button
+        <Button
           className="text-red-500 cursor-pointer"
           onClick={(e) => {
             e.stopPropagation();
@@ -32,7 +34,7 @@ export function ProjectItem({ project, onOpen, onEdit, onDelete }: Props) {
           }}
         >
           Deletar
-        </button>
+        </Button>
       </div>
     </li>
   );

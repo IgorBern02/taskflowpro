@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Input } from "../Input";
+import { Button } from "../Button";
 
 type Props = {
   project: any;
@@ -19,23 +21,19 @@ export function EditProjectModal({ project, onClose, onSave }: Props) {
       <div className="bg-white p-6 rounded w-80">
         <h2 className="text-lg font-bold mb-4">Editar Projeto</h2>
 
-        <input
-          className="border p-2 w-full mb-6"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <Input value={name} onChange={setName} placeholder="Nome do projeto" />
 
-        <div className="flex justify-end gap-3">
-          <button className="px-4 py-2 border" onClick={onClose}>
+        <div className="flex justify-end gap-3 rounded mt-8">
+          <Button className="px-4 py-2 border rounded" onClick={onClose}>
             Cancelar
-          </button>
+          </Button>
 
-          <button
-            className="px-4 py-2 bg-blue-600 text-white"
+          <Button
+            className="px-4 py-2 bg-blue-600 text-white rounded"
             onClick={handleSave}
           >
             Salvar
-          </button>
+          </Button>
         </div>
       </div>
     </div>

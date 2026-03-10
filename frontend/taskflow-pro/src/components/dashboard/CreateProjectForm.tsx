@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Input } from "../Input";
+import { Button } from "../Button";
 
 type Props = {
   onCreate: (name: string) => void;
@@ -16,19 +18,15 @@ export function CreateProjectForm({ onCreate, isCreating }: Props) {
 
   return (
     <div className="flex gap-2 mb-6">
-      <input
-        className="border border-black text-black p-2 flex-1"
-        placeholder="Nome do projeto"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <button
-        className="bg-black text-white px-4 cursor-pointer"
+      <Input placeholder="Nome do projeto" value={name} onChange={setName} />
+
+      <Button
+        className="bg-black text-white px-4 cursor-pointer rounded"
         disabled={isCreating}
         onClick={handleCreate}
       >
         Criar
-      </button>
+      </Button>
     </div>
   );
 }
