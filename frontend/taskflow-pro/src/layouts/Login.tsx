@@ -45,7 +45,7 @@ export const Login = () => {
       <div className="space-y-6">
         {/* Form */}
         <div className="space-y-4">
-          <div className="space-y-2">
+          <div className="space-y-2 flex flex-col">
             <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
               Email
             </label>
@@ -57,7 +57,7 @@ export const Login = () => {
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 flex flex-col">
             <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
               Senha
             </label>
