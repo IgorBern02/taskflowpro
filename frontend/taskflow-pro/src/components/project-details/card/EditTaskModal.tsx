@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Input } from "../../Input";
+import { Button } from "../../Button";
 
 type Props = {
   task: any;
@@ -14,23 +16,24 @@ export function EditTaskModal({ task, onClose, onSave }: Props) {
       <div className="bg-white p-6 rounded w-96 space-y-4">
         <h2 className="text-lg font-semibold">Editar tarefa</h2>
 
-        <input
-          className="border p-2 w-full"
+        <Input
+          className="w-full"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={setTitle}
+          placeholder="Título da tarefa"
         />
 
         <div className="flex justify-end gap-2">
-          <button className="px-4 py-2 border rounded" onClick={onClose}>
+          <Button className="px-4 py-2 border rounded" onClick={onClose}>
             Cancelar
-          </button>
+          </Button>
 
-          <button
+          <Button
             className="px-4 py-2 bg-black text-white rounded"
             onClick={() => onSave(task.id, title)}
           >
             Salvar
-          </button>
+          </Button>
         </div>
       </div>
     </div>

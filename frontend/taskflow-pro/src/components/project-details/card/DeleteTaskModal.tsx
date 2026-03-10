@@ -1,3 +1,5 @@
+import { Button } from "../../Button";
+
 interface DeleteTaskModalProps {
   taskId: string;
   onClose: () => void;
@@ -14,15 +16,16 @@ export const DeleteTaskModal = ({
         <h2 className="text-lg font-semibold">Excluir tarefa</h2>
         <p>Tem certeza que deseja excluir esta tarefa?</p>
         <div className="flex justify-end gap-2">
-          <button className="px-4 py-2 border rounded" onClick={onClose}>
+          <Button className="px-4 py-2 border rounded" onClick={onClose}>
             Cancelar
-          </button>
-          <button
+          </Button>
+
+          <Button
             className="px-4 py-2 bg-red-600 text-white rounded"
             onClick={() => onDelete(taskId)}
           >
             Excluir
-          </button>
+          </Button>
         </div>
       </div>
     </div>

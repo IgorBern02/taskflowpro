@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useTasks } from "../../hooks/useTasks";
 import { useParams } from "react-router-dom";
+import { Input } from "../Input";
+import { Button } from "../Button";
 
 interface CreateTaskFormProps {
   text: string;
@@ -15,14 +17,15 @@ export const CreateTaskForm = ({ text }: CreateTaskFormProps) => {
 
   return (
     <div className="flex gap-2 mb-6">
-      <input
-        className="border border-black p-2 flex-1"
-        placeholder="Digite sua nova tarefa"
+      <Input
+        className="flex-1"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={setTitle}
+        placeholder="Digite sua nova tarefa"
       />
-      <button
-        className="bg-black text-white px-4"
+
+      <Button
+        className="bg-black text-white px-4 rounded"
         onClick={() => {
           if (!title.trim()) return;
           createTask(title);
@@ -30,7 +33,7 @@ export const CreateTaskForm = ({ text }: CreateTaskFormProps) => {
         }}
       >
         {text}
-      </button>
+      </Button>
     </div>
   );
 };
