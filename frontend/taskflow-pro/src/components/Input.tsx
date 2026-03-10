@@ -12,7 +12,7 @@ export const Input = ({ value, onChange, ...rest }: InputProps) => {
       {...rest}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="border p-2 w-full text-black"
+      className={`border border-black p-2 rounded ${rest.className || ""}`}
     />
   );
 };
