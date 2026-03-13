@@ -94,7 +94,7 @@ export const Register = () => {
               <p className="text-sm text-slate-500">Leva menos de um minuto</p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 flex flex-col  *:*:w-full">
               <Field label="Email">
                 <Input
                   placeholder="voce@email.com"

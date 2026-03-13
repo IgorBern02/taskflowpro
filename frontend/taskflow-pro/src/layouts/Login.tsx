@@ -6,6 +6,8 @@ import { Input } from "../components/Input";
 import { useAuthStore } from "../store/auth.store";
 import { motion } from "framer-motion";
 
+import { Navigate } from "react-router-dom";
+
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +15,11 @@ export const Login = () => {
 
   const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
+  const token = useAuthStore((state) => state.token);
+
+  if (token) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   async function handleLogin() {
     try {
@@ -27,7 +34,7 @@ export const Login = () => {
         data.token,
       );
 
-      navigate("/dashboard");
+      navigate("/dashboard", { replace: true });
     } catch (error: any) {
       alert(error.message);
     } finally {
