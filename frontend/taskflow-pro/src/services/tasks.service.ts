@@ -1,7 +1,12 @@
 import type { Task } from "../types/Task";
+import { useAuthStore } from "../store/auth.store";
 
 function getAuthHeaders() {
-  const token = localStorage.getItem("token");
+  const token = useAuthStore.getState().token;
+
+  if (!token) {
+    throw new Error("Token de autenticação não encontrado");
+  }
 
   return {
     "Content-Type": "application/json",

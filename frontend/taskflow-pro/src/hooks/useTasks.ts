@@ -6,14 +6,17 @@ import {
   deleteTask,
 } from "../services/tasks.service";
 import type { Task } from "../types/Task";
+import { useAuthStore } from "../store/auth.store";
 
 export function useTasks(projectId: string) {
   const queryClient = useQueryClient();
 
+  const token = useAuthStore((state) => state.token);
+
   const tasksQuery = useQuery<Task[]>({
     queryKey: ["tasks", projectId],
     queryFn: () => getTasks(projectId),
-    enabled: !!projectId,
+    enabled: !!projectId && !!token,
   });
 
   const createMutation = useMutation({

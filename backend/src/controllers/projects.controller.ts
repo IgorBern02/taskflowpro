@@ -4,6 +4,10 @@ import { CreateProjectDTO, UpdateProjectDTO } from "../types/project.types";
 
 // LISTAR
 export async function getProjects(req: Request, res: Response) {
+  if (!req.user) {
+    return res.status(401).json({ error: "Usuário não autenticado" });
+  }
+
   const { data, error } = await supabaseAdmin
     .from("projects")
     .select("*")

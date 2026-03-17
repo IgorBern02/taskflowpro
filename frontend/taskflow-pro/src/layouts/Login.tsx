@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "../services/auth.service";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { useAuthStore } from "../store/auth.store";
 import { motion } from "framer-motion";
-
-import { Navigate } from "react-router-dom";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,14 +15,17 @@ export const Login = () => {
   const setAuth = useAuthStore((state) => state.setAuth);
   const token = useAuthStore((state) => state.token);
 
-  if (token) {
-    return <Navigate to="/dashboard" replace />;
-  }
+  useEffect(() => {
+    if (token) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [token, navigate]);
 
   async function handleLogin() {
     try {
       setLoading(true);
       const data = await signIn(email, password);
+      console.log("TOKEN RECEBIDO:", data.token);
 
       setAuth(
         {

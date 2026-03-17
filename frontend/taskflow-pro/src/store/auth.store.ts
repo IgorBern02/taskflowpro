@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 type User = {
   id: string;
@@ -8,38 +9,39 @@ type User = {
 type AuthState = {
   user: User | null;
   token: string | null;
+  isAuthLoading: boolean;
   setAuth: (user: User, token: string) => void;
   logout: () => void;
-  isAuthLoading: boolean;
   setAuthLoading: (loading: boolean) => void;
 };
 
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  token: null,
-  isAuthLoading: true,
-  setAuthLoading: (loading) => {
-    set({ isAuthLoading: loading });
-  },
-
-  setAuth: (user, token) => {
-    localStorage.setItem("token", token);
-
-    set({
-      user,
-      token,
-    });
-  },
-
-  logout: async () => {
-    localStorage.removeItem("token");
-
-    (set({
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
       user: null,
       token: null,
+      isAuthLoading: true,
+
+      setAuthLoading: (loading) => set({ isAuthLoading: loading }),
+
+      setAuth: (user, token) =>
+        set({
+          user,
+          token,
+        }),
+
+      logout: () =>
+        set({
+          user: null,
+          token: null,
+        }),
     }),
-      {
-        name: "auth-storage",
-      });
-  },
-}));
+    {
+      name: "auth-storage",
+
+      onRehydrateStorage: () => (state) => {
+        state?.setAuthLoading(false);
+      },
+    },
+  ),
+);

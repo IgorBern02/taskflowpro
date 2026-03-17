@@ -2,10 +2,15 @@ import { useAuthStore } from "../store/auth.store";
 
 const API_URL = "http://localhost:3001";
 
+function isValidJWT(token: string) {
+  return token.split(".").length === 3;
+}
+
 function getHeaders() {
   const token = useAuthStore.getState().token;
 
-  if (!token) {
+  if (!token || !isValidJWT(token)) {
+    console.log("⛔ Token inválido:", token);
     throw new Error("Usuário não autenticado");
   }
 

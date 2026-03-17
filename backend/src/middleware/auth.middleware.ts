@@ -1,27 +1,46 @@
 import { Request, Response, NextFunction } from "express";
-import { supabaseAuth } from "../services/supabaseAuth";
+import { createClient } from "@supabase/supabase-js";
 
 export async function authMiddleware(
   req: Request,
   res: Response,
   next: NextFunction,
-) {
+): Promise<void> {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({ error: "Token não fornecido" });
+    res.status(401).json({ error: "Token não fornecido" });
+    return;
   }
 
-  const token = req.headers.authorization?.split(" ")[1];
+  const token = authHeader.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ error: "Token não enviado" });
+    res.status(401).json({ error: "Token mal formatado" });
+    return;
   }
 
-  const { data, error } = await supabaseAuth.auth.getUser(token);
+  const supabase = createClient(
+    process.env.SUPABASE_URL as string,
+    process.env.SUPABASE_ANON_KEY as string,
+    {
+      global: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    },
+  );
+
+  console.log("TOKEN RECEBIDO:", token);
+  console.log("PARTES:", token?.split(".").length);
+
+  const { data, error } = await supabase.auth.getUser(token);
 
   if (error || !data.user) {
-    return res.status(401).json({ error: "Token inválido" });
+    console.log("AUTH ERROR:", error?.message);
+    res.status(401).json({ error: "Token inválido" });
+    return;
   }
 
   req.user = data.user;
