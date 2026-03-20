@@ -4,7 +4,7 @@ dotenv.config();
 
 import cors from "cors";
 import express from "express";
-import tasksRoutes from "./routes/tasks.routes";
+import tasksRoutes from "./routes/tasks.routes.js";
 import projectsRoutes from "./routes/projects.routes";
 import authRoutes from "./routes/auth.routes";
 
