@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { supabaseAuth } from "../services/supabaseAuth";
+import { supabaseAuth } from "../services/supabaseAuth.js";
 
 export async function register(req: Request, res: Response) {
   const { email, password } = req.body;

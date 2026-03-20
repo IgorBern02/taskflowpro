@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { supabaseAdmin } from "../services/supabaseAdmin";
+import { supabaseAdmin } from "../services/supabaseAdmin.js";
 import { CreateProjectDTO, UpdateProjectDTO } from "../types/project.types";
 
 // LISTAR
