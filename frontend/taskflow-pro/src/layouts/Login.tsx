@@ -53,27 +53,26 @@ export const Login = () => {
       <div className="space-y-6">
         {/* Form */}
         <div className="space-y-4">
-          <div className="space-y-2 flex flex-col">
+          <div className="space-y-2 flex flex-col relative">
             <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
               Email
             </label>
             <Input
               placeholder="voce@email.com"
-              type="text"
               value={email}
               onChange={setEmail}
             />
           </div>
 
-          <div className="space-y-2 flex flex-col">
+          <div className="space-y-2 flex flex-col ">
             <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
               Senha
             </label>
             <Input
               placeholder="••••••••"
-              type="password"
               value={password}
               onChange={setPassword}
+              isPassword
             />
           </div>
         </div>

@@ -107,9 +107,9 @@ export const Register = () => {
               <Field label="Senha">
                 <Input
                   placeholder="••••••••"
-                  type="password"
                   value={password}
                   onChange={setPassword}
+                  isPassword
                   required
                 />
               </Field>
@@ -117,9 +117,9 @@ export const Register = () => {
               <Field label="Confirmar senha">
                 <Input
                   placeholder="••••••••"
-                  type="password"
                   value={confirmPassword}
                   onChange={setConfirmPassword}
+                  isPassword
                   required
                 />
               </Field>
