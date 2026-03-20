@@ -1,6 +1,6 @@
 import { useAuthStore } from "../store/auth.store";
 
-const API_URL = "http://localhost:3001";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function isValidJWT(token: string) {
   return token.split(".").length === 3;

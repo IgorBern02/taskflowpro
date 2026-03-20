@@ -14,7 +14,7 @@ function getAuthHeaders() {
   };
 }
 
-const API_URL = "http://localhost:3001/projects";
+const API_URL = `${import.meta.env.VITE_API_URL}/projects`;
 
 export async function getTasks(projectId: string) {
   const response = await fetch(`${API_URL}/${projectId}/tasks`, {
