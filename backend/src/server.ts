@@ -12,7 +12,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://SEU-FRONT.vercel.app"],
+    origin: ["http://localhost:5173", "https://taskflowpro-nine.vercel.app"],
     credentials: true,
   }),
 );
