@@ -93,6 +93,7 @@ Crie um .env:
 
 VITE_API_URL=http://localhost:3001
 ```
+---
 
 🔐 Autenticação
 
@@ -100,6 +101,8 @@ A autenticação é feita via JWT utilizando o Supabase.
 O token é armazenado no client e enviado no header:
 
 Authorization: Bearer <token>
+
+---
 
 🧠 Aprendizados
 
@@ -112,13 +115,19 @@ Este projeto foi desenvolvido com foco em:
 - Boas práticas com React e TypeScript
 - Deploy em produção
 
+---
+
 👨‍💻 Autor
 
 Desenvolvido por Igor
 
+---
+
 💼 Em busca de oportunidade como Desenvolvedor Front-End / Full Stack
 📧 igudevfrontend@gmail.com
 🔗 IgorBern02 [https://www.linkedin.com/in/igor-bernardess/]
+
+---
 
 ⭐ Contribuição
 
