@@ -1,6 +1,6 @@
 # 🚀 TaskFlow Pro
 
-Aplicação full stack para gerenciamento de tarefas no estilo **Kanban**, permitindo que usuários organizem projetos e acompanhem o progresso de atividades de forma visual e intuitiva.
+Sistema full stack de gerenciamento de tarefas com autenticação JWT, separação de dados por usuário e no estilo **Kanban**, permitindo que usuários organizem projetos e acompanhem o progresso de atividades de forma visual e intuitiva.
 
 ---
 
